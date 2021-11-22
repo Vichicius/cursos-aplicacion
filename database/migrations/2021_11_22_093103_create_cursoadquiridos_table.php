@@ -15,6 +15,9 @@ class CreateCursoadquiridosTable extends Migration
     {
         Schema::create('cursoadquiridos', function (Blueprint $table) {
             $table->id();
+            //relación entre usuarios y cursos
+            $table->foreignId('usuario_id')->constrained();
+            $table->foreignId('curso_id')->constrained();
             $table->timestamps();
         });
     }
