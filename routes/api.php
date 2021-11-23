@@ -22,7 +22,7 @@ use App\Http\Controllers\VideosController;
 // });
 
 Route::prefix('usuario')->group(function(){
-    Route::get('/registrar', [UsuariosController::class,'registrar']);
+    Route::post('/registrar', [UsuariosController::class,'registrar']);
     Route::delete('/desactivar', [UsuariosController::class,'desactivar']);
 });
 Route::prefix('curso')->group(function(){
