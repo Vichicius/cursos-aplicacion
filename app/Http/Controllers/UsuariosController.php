@@ -34,13 +34,13 @@ class UsuariosController extends Controller
         //devolver el objeto usuario en json
         return response()->json($usuario);
     }
+    
     public function editar(Request $req, int $id){
         //recoger la info del request (viene en json)
         $jdata = $req->getContent();
         //pasar el json a objeto
         $data = json_decode($jdata);
 
-        
         $usuario = Usuario::find($id);
         if ($usuario == null){
             $response['msg'] = "Id fuera de rango.";
@@ -48,7 +48,6 @@ class UsuariosController extends Controller
             return response($response);
         }
         
-
         //comprobar qué datos quiere cambiar y cambiarlos 
         if (isset($data->nombre)) $usuario->nombre = $data->nombre;
         if (isset($data->foto)) $usuario->foto = $data->foto;

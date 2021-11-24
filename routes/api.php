@@ -22,16 +22,12 @@ use App\Http\Controllers\VideosController;
 // });
 
 Route::prefix('usuario')->group(function(){
-    Route::post('/registrar', [UsuariosController::class,'registrar']);
-    Route::post('/editar/{id}', [UsuariosController::class,'editar']);
-    Route::delete('/desactivar/{id}', [UsuariosController::class,'desactivar']);
+    Route::put('/registrar', [UsuariosController::class,'registrar']);
+    Route::put('/editar/{id}', [UsuariosController::class,'editar']);
 });
 Route::prefix('curso')->group(function(){
     Route::put('/crear', [CursosController::class,'crear']);
-    Route::put('/editar', [CursosController::class,'editar']); //aqui se le añaden los videos
-    Route::delete('/borrar', [CursosController::class,'borrar']);
 });
-// Route::prefix('cursos')->group(function(){
-//     Route::put('/crear', [CursosController::class,'crear']);
-//     Route::delete('/borrar', [CursosController::class,'crear']);
-// });
+Route::prefix('videos')->group(function(){
+    Route::put('/crear', [CursosController::class,'crear']); //aqui se le asigna al curso directamente
+});
