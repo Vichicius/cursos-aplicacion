@@ -22,12 +22,19 @@ use App\Http\Controllers\VideosController;
 // });
 
 Route::prefix('usuario')->group(function(){
-    Route::put('/registrar', [UsuariosController::class,'registrar']);
-    Route::put('/editar/{id}', [UsuariosController::class,'editar']);
+    Route::put('/registrar', [UsuariosController::class,'registrar']); //1 X
+    Route::put('/editar/{id}', [UsuariosController::class,'editar']); //2 X
+    Route::put('/cursos/{id}', [UsuariosController::class,'verCursosUsuario']); //6 ver los cursos adquiridos del usuario
+    Route::put('/videos/{id}', [UsuariosController::class,'verVideosUsuario']); //7 ver los videos del curso adquirido previamente
+
 });
 Route::prefix('curso')->group(function(){
-    Route::put('/crear', [CursosController::class,'crear']);
+    Route::put('/crear', [CursosController::class,'crear']); //3 X
+    Route::put('/comprar', [CursosController::class,'comprar']);//5 X
+    Route::put('/cursos', [CursosController::class,'verCursos']); //4 ver todos los cursos
+
 });
 Route::prefix('videos')->group(function(){
-    Route::put('/crear', [CursosController::class,'crear']); //aqui se le asigna al curso directamente
+    Route::put('/crear', [VideosController::class,'crear']); //3 X. Se le asigna al curso directamente
+    Route::put('/ver', [VideosController::class,'ver']);//8
 });

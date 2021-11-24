@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Video;
+use App\Models\VideoVisto;
 
 class VideosController extends Controller
 {
@@ -37,6 +38,37 @@ class VideosController extends Controller
         }else{
             $response['status'] = 0;
             $response['msg'] = "Introduce titulo, foto, enlace y a que video pertenece";
+            
+        }
+        return response()->json($response);
+    }
+
+    public function ver(Request $req){
+        //recoger la info del request (viene en json)
+        $jdata = $req->getContent();
+        //pasar el json a objeto
+        $data = json_decode($jdata);
+
+        $videovisto = new VideoVisto;
+        if(isset($data->usuario_id) && isset($data->video_id)){
+            try{
+
+                $videovisto->usuario_id = $data->usuario_id;
+                $videovisto->video_id = $data->video_id;
+                $videovisto->save();
+
+                $response['status'] = 1;
+                $response['videovisto'] = $videovisto;
+
+            }catch (\Exception $e){
+
+                $response['status'] = 0;
+                $response['msg'] = "Error al intentar registrar la visita: ".$e->getMessage();
+                
+            }
+        }else{
+            $response['status'] = 0;
+            $response['msg'] = "Introduce el id del usuario y el id del video visto";
             
         }
         return response()->json($response);
