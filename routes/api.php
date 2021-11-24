@@ -23,7 +23,8 @@ use App\Http\Controllers\VideosController;
 
 Route::prefix('usuario')->group(function(){
     Route::post('/registrar', [UsuariosController::class,'registrar']);
-    Route::delete('/desactivar', [UsuariosController::class,'desactivar']);
+    Route::post('/editar/{id}', [UsuariosController::class,'editar']);
+    Route::delete('/desactivar/{id}', [UsuariosController::class,'desactivar']);
 });
 Route::prefix('curso')->group(function(){
     Route::put('/crear', [CursosController::class,'crear']);
