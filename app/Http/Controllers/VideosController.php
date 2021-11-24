@@ -13,28 +13,30 @@ class VideosController extends Controller
         $jdata = $req->getContent();
         //pasar el json a objeto
         $data = json_decode($jdata);
-        $curso = new Curso;
 
-        if(isset($data->titulo) && isset($data->descripcion) && isset($data->foto)){
+        $video = new Video;
+
+        if(isset($data->titulo) && isset($data->foto) && isset($data->enlace) && isset($data->curso_id)){
             try{
 
-                $curso->titulo = $data->titulo;
-                $curso->descripcion = $data->descripcion;
-                $curso->foto = $data->foto;
-                $curso->save();
+                $video->titulo = $data->titulo;
+                $video->foto = $data->foto;
+                $video->enlace = $data->enlace;
+                $video->curso_id = $data->curso_id;
+                $video->save();
 
                 $response['status'] = 1;
-                $response['curso'] = $curso;
+                $response['video'] = $video;
 
             }catch (\Exception $e){
 
                 $response['status'] = 0;
-                $response['msg'] = "Error al intentar añadir el curso: ".$e->getMessage();
+                $response['msg'] = "Error al intentar añadir el video: ".$e->getMessage();
                 
             }
         }else{
             $response['status'] = 0;
-            $response['msg'] = "Introduce titulo, descripcion y la url de la foto";
+            $response['msg'] = "Introduce titulo, foto, enlace y a que video pertenece";
             
         }
         return response()->json($response);
