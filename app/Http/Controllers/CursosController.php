@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Curso;
-use App\Models\Cursosadquirido;
+use App\Models\Video;
+use App\Models\Cursoadquirido;
+use Illuminate\Support\Facades\DB;
 
 
 class CursosController extends Controller
@@ -48,16 +50,16 @@ class CursosController extends Controller
         //pasar el json a objeto
         $data = json_decode($jdata);
 
-        $cursosadquirido = new Cursosadquirido;
+        $cursosadquiridos = new Cursoadquirido;
         if(isset($data->usuario_id) && isset($data->curso_id)){
             try{
 
-                $cursosadquirido->usuario_id = $data->usuario_id;
-                $cursosadquirido->curso_id = $data->curso_id;
-                $cursosadquirido->save();
+                $cursosadquiridos->usuario_id = $data->usuario_id;
+                $cursosadquiridos->curso_id = $data->curso_id;
+                $cursosadquiridos->save();
 
                 $response['status'] = 1;
-                $response['cursosadquirido'] = $cursosadquirido;
+                $response['cursosadquirido'] = $cursosadquiridos;
 
             }catch (\Exception $e){
 
@@ -79,23 +81,29 @@ class CursosController extends Controller
         //pasar el json a objeto
         $data = json_decode($jdata);
 
-        $curso = new Curso;
+        $todosCursos = Curso::all();
 
-        if(isset($data->filtro)){ //filtrar la búsqueda
-            $todosCursos = Curso::all();
-
-            //Curso::where('titulo', "LIKE", "%" . $data->filtro . "%");
+        if(isset($data->filtro)){ //si ha puesto un filtro:
 
             foreach ($todosCursos as $key => $value) {
-                if(str_contains($value->titulo, $data->filtro)){
-                    $response["Cursos"][$key] = $value;
+                if(str_contains($value->titulo, $data->filtro)){//curso seleccionado aplicando filtro
+                    $response[$key+1]["Titulo"] = $value->titulo;
+                    $response[$key+1]["Foto"] = $value->foto;
+                    $videos = Video::where('curso_id', $value->id)->get();
+
+                    $numeroVideos = count($videos);
+                    $response[$key+1]["Videos"] = $numeroVideos;
                 }
             }
 
         }else{ //mostrar todos los cursos
-            $todosCursos = Curso::all();
             foreach ($todosCursos as $key => $value) {
-                $response["Cursos"][$key] = $value;
+                $response[$key+1]["Titulo"] = $value->titulo;
+                $response[$key+1]["Foto"] = $value->foto;
+                $videos = Video::where('curso_id', $value->id)->get();
+                
+                $numeroVideos = count($videos);
+                $response[$key+1]["Videos"] = $numeroVideos;
             }
         }
 

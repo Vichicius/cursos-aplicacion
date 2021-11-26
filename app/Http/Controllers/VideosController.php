@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Video;
-use App\Models\VideoVisto;
+use App\Models\Videovisto;
 
 class VideosController extends Controller
 {
     //
-    public function registrar(Request $req){
+    public function crear(Request $req){
         //recoger la info del request (viene en json)
         $jdata = $req->getContent();
         //pasar el json a objeto
@@ -49,7 +49,7 @@ class VideosController extends Controller
         //pasar el json a objeto
         $data = json_decode($jdata);
 
-        $videovisto = new VideoVisto;
+        $videovisto = new Videovisto;
         if(isset($data->usuario_id) && isset($data->video_id)){
             try{
 
