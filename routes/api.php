@@ -22,7 +22,7 @@ use App\Http\Controllers\VideosController;
 // });
 
 Route::prefix('usuario')->group(function(){
-    Route::put('/registrar', [UsuariosController::class,'registrar']); //1 X
+    Route::put('/registrar', [UsuariosController::class,'registrar']); //1 Xa
     Route::put('/editar/{id}', [UsuariosController::class,'editar']); //2 X
     Route::put('/cursos/{id}', [UsuariosController::class,'verCursosUsuario']); //6 ver los cursos adquiridos del usuario
     Route::put('/videos/{id}', [UsuariosController::class,'verVideosUsuario']); //7 ver los videos del curso adquirido previamente
