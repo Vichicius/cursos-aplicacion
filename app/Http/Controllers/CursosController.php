@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Curso;
-use App\Models\CursosAdquirido;
+use App\Models\Cursosadquirido;
 
 
 class CursosController extends Controller
 {
     //
-    public function registrar(Request $req){
+    public function crear(Request $req){
         //recoger la info del request (viene en json)
         $jdata = $req->getContent();
         //pasar el json a objeto
@@ -48,7 +48,7 @@ class CursosController extends Controller
         //pasar el json a objeto
         $data = json_decode($jdata);
 
-        $cursosadquirido = new CursosAdquirido;
+        $cursosadquirido = new Cursosadquirido;
         if(isset($data->usuario_id) && isset($data->curso_id)){
             try{
 
@@ -81,10 +81,22 @@ class CursosController extends Controller
 
         $curso = new Curso;
 
-        if(isset($data->filtro)){
-            
-        }else{
-            Cursos::all();
+        if(isset($data->filtro)){ //filtrar la búsqueda
+            $todosCursos = Curso::all();
+
+            //Curso::where('titulo', "LIKE", "%" . $data->filtro . "%");
+
+            foreach ($todosCursos as $key => $value) {
+                if(str_contains($value->titulo, $data->filtro)){
+                    $response["Cursos"][$key] = $value;
+                }
+            }
+
+        }else{ //mostrar todos los cursos
+            $todosCursos = Curso::all();
+            foreach ($todosCursos as $key => $value) {
+                $response["Cursos"][$key] = $value;
+            }
         }
 
         return response()->json($response);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use App\Models\CursosAdquirido;
+use App\Models\Curso;
 
 class UsuariosController extends Controller
 {
@@ -73,4 +75,26 @@ class UsuariosController extends Controller
         return response()->json($response);
         
     }
+
+    public function verCursosUsuario(Request $req, int $id){
+        //recoger la info del request (viene en json)
+        $jdata = $req->getContent();
+        //pasar el json a objeto
+        $data = json_decode($jdata);
+
+        $usuario = Usuario::find($id);
+        $relaciones = CursosAdquirido::all();
+        $todosCursos = Curso::all();
+        $idCursosAdquiridos = [];
+        foreach ($relaciones as $key => $value) {
+            if($value->user_id == $usuario->id){ //relaciones-> userid coincide con usuario id
+                array_push($idCursosAdquiridos, $value->curso_id);
+            }
+        }
+        $response["msg"] = $idCursosAdquiridos;
+            
+
+        return response()->json($response);
+    }
+
 }
