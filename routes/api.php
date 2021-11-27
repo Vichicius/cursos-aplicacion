@@ -25,7 +25,7 @@ Route::prefix('usuario')->group(function(){
     Route::put('/registrar', [UsuariosController::class,'registrar']); //1 X
     Route::put('/editar/{id}', [UsuariosController::class,'editar']); //2 X
     Route::put('/cursos/{id}', [UsuariosController::class,'verCursosUsuario']); //6 X ver los cursos adquiridos del usuario
-    Route::put('/videos/{id}', [UsuariosController::class,'verVideosCursoAdquirido']); //7 ver los videos del curso adquirido previamente
+    Route::put('/videos/{id}', [UsuariosController::class,'verVideosDelCursoAdquirido']); //7 ver los videos del curso adquirido previamente
 
 });
 Route::prefix('curso')->group(function(){

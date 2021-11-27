@@ -17,7 +17,7 @@ class CreateVideosTable extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('foto');
-            $table->string('enlace');
+            $table->string('enlace')->unique();
             //pertenece a tal curso
             $table->foreignId('curso_id')->constrained();
             $table->timestamps();

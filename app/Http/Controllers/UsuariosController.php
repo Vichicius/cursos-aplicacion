@@ -95,7 +95,10 @@ class UsuariosController extends Controller
                 array_push($idCursosAdquiridos, $value->curso_id);
             }
         }
-        
+        if (count($idCursosAdquiridos) == 0){
+            $response["status"] = 0;
+            $response["msg"] = "El usuario no tiene ningun curso";
+        }
         //Ahora sacar los cursos y mostrarle lo que necesita (titulo, foto y numero de videos)
         foreach ($idCursosAdquiridos as $key => $value) {
             $cursoadquirido = Curso::find($value);
@@ -110,7 +113,7 @@ class UsuariosController extends Controller
 
         return response()->json($response);
     }
-    public function verVideosCursoAdquirido(Request $req, int $id){
+    public function verVideosDelCursoAdquirido(Request $req, int $id){
         //recoger la info del request (viene en json)
         $jdata = $req->getContent();
         //pasar el json a objeto
