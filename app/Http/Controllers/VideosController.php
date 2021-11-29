@@ -91,6 +91,10 @@ class VideosController extends Controller
                     $videovisto->usuario_id = $data->usuario_id;
                     $videovisto->video_id = $idVideo;
                     $videovisto->save();
+                    //añadir al response id video y enlace video.
+                    $enlace = Video::where('id', $idVideo)->value('enlace');
+                    $response["respuesta al usuario"]["video_id"] = $idVideo;
+                    $response["respuesta al usuario"]["enlace"] = $enlace;
                     $response["status"] = 1;
                     $response["videovisto"] = $videovisto;
                 }else{
